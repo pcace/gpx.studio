@@ -24,7 +24,7 @@
 
 	import { map, newGPXFile, routingControls, selectFileWhenLoaded } from '$lib/stores';
 	import { dbUtils, getFile, getFileIds, settings } from '$lib/db';
-	import { brouterProfiles, routingProfileSelectItem } from './Routing';
+	import { availableProfiles, routingProfileSelectItem } from './Routing';
 
 	import { _, locale } from 'svelte-i18n';
 	import { RoutingControls } from './RoutingControls';
@@ -152,10 +152,8 @@
 								<Select.Value />
 							</Select.Trigger>
 							<Select.Content>
-								{#each Object.keys(brouterProfiles) as profile}
-									<Select.Item value={profile}
-										>{$_(`toolbar.routing.activities.${profile}`)}</Select.Item
-									>
+								{#each Object.keys($availableProfiles) as profile}
+									<Select.Item value={profile}>{profile}</Select.Item>
 								{/each}
 							</Select.Content>
 						</Select.Root>

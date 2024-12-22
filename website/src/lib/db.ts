@@ -88,7 +88,7 @@ export const settings = {
     verticalFileView: dexieSettingStore<boolean>('fileView', false),
     minimizeRoutingMenu: dexieSettingStore('minimizeRoutingMenu', false),
     routing: dexieSettingStore('routing', true),
-    routingProfile: dexieSettingStore('routingProfile', 'bike'),
+    routingProfile: dexieSettingStore('routingProfile', '---'),
     privateRoads: dexieSettingStore('privateRoads', false),
     currentBasemap: dexieSettingStore('currentBasemap', defaultBasemap),
     previousBasemap: dexieSettingStore('previousBasemap', defaultBasemap),

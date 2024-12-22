@@ -4,29 +4,49 @@ import { derived, get, writable } from "svelte/store";
 import { settings } from "$lib/db";
 import { _, isLoading, locale } from "svelte-i18n";
 import { getElevation } from "$lib/utils";
+import { PUBLIC_BROUTER_ADDRESS } from '$env/static/public';
 
 const { routing, routingProfile, privateRoads } = settings;
 
-export const brouterProfiles: { [key: string]: string } = {
-    bike: 'Trekking-dry',
-    racing_bike: 'fastbike',
-    gravel_bike: 'gravel',
-    mountain_bike: 'MTB',
-    foot: 'Hiking-Alpine-SAC6',
-    motorcycle: 'Car-FastEco',
-    water: 'river',
-    railway: 'rail'
-};
+export const availableProfiles = writable<{ [key: string]: string }>({});
+
+export async function fetchProfiles() {
+    try {
+        const response = await fetch(`${PUBLIC_BROUTER_ADDRESS}/brouter/getprofiles`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch profiles');
+        }
+        const profiles = await response.json();
+        const profileMap: { [key: string]: string } = {};
+        profiles.forEach((profile: string) => {
+            const profileName = profile.replace('.brf', '');
+            profileMap[profileName] = profileName;
+        });
+        availableProfiles.set(profileMap);
+
+        // Set the default profile to the first available one if not already set
+        if (Object.keys(profileMap).length > 0 && get(routingProfileSelectItem).value === '') {
+            const firstProfile = Object.keys(profileMap)[0];
+            routingProfileSelectItem.set({ value: firstProfile, label: firstProfile });
+        }
+    } catch (error) {
+        console.error('Error fetching profiles:', error);
+    }
+}
+
+// Fetch profiles on module load
+fetchProfiles();
+
 export const routingProfileSelectItem = writable({
     value: '',
     label: ''
 });
 
 derived([routingProfile, locale, isLoading], ([profile, l, i]) => [profile, l, i]).subscribe(([profile, l, i]) => {
-    if (!i && profile !== '' && (profile !== get(routingProfileSelectItem).value || get(_)(`toolbar.routing.activities.${profile}`) !== get(routingProfileSelectItem).label) && l !== null) {
+    if (!i && profile !== '' && (profile !== get(routingProfileSelectItem).value || get(_)(`${profile}`) !== get(routingProfileSelectItem).label) && l !== null) {
         routingProfileSelectItem.update((item) => {
             item.value = profile;
-            item.label = get(_)(`toolbar.routing.activities.${profile}`);
+            item.label = get(_)(`${profile}`);
             return item;
         });
     }
@@ -39,27 +59,26 @@ routingProfileSelectItem.subscribe((item) => {
 
 export function route(points: Coordinates[]): Promise<TrackPoint[]> {
     if (get(routing)) {
-        return getRoute(points, brouterProfiles[get(routingProfile)], get(privateRoads));
+        return getRoute(points, get(availableProfiles)[get(routingProfile)], get(privateRoads));
     } else {
         return getIntermediatePoints(points);
     }
 }
 
 async function getRoute(points: Coordinates[], brouterProfile: string, privateRoads: boolean): Promise<TrackPoint[]> {
-    let url = `https://routing.gpx.studio?lonlats=${points.map(point => `${point.lon.toFixed(8)},${point.lat.toFixed(8)}`).join('|')}&profile=${brouterProfile + (privateRoads ? '-private' : '')}&format=geojson&alternativeidx=0`;
-
-    let response = await fetch(url);
+    const url = `${PUBLIC_BROUTER_ADDRESS}?lonlats=${points.map(point => `${point.lon.toFixed(8)},${point.lat.toFixed(8)}`).join('|')}&profile=${brouterProfile + (privateRoads ? '' : '')}&format=geojson&alternativeidx=0`;
+    const response = await fetch(url);
 
     // Check if the response is ok
     if (!response.ok) {
         throw new Error(`${await response.text()}`);
     }
 
-    let geojson = await response.json();
+    const geojson = await response.json();
 
-    let route: TrackPoint[] = [];
-    let coordinates = geojson.features[0].geometry.coordinates;
-    let messages = geojson.features[0].properties.messages;
+    const route: TrackPoint[] = [];
+    const coordinates = geojson.features[0].geometry.coordinates;
+    const messages = geojson.features[0].properties.messages;
 
     const lngIdx = messages[0].indexOf("Longitude");
     const latIdx = messages[0].indexOf("Latitude");
@@ -68,7 +87,7 @@ async function getRoute(points: Coordinates[], brouterProfile: string, privateRo
     let tags = messageIdx < messages.length ? getTags(messages[messageIdx][tagIdx]) : {};
 
     for (let i = 0; i < coordinates.length; i++) {
-        let coord = coordinates[i];
+        const coord = coordinates[i];
         route.push(new TrackPoint({
             attributes: {
                 lat: coord[1],
@@ -94,7 +113,7 @@ async function getRoute(points: Coordinates[], brouterProfile: string, privateRo
 
 function getTags(message: string): { [key: string]: string } {
     const fields = message.split(" ");
-    let tags: { [key: string]: string } = {};
+    const tags: { [key: string]: string } = {};
     for (let i = 0; i < fields.length; i++) {
         let [key, value] = fields[i].split("=");
         key = key.replace(/:/g, '_');
@@ -104,14 +123,14 @@ function getTags(message: string): { [key: string]: string } {
 }
 
 function getIntermediatePoints(points: Coordinates[]): Promise<TrackPoint[]> {
-    let route: TrackPoint[] = [];
-    let step = 0.05;
+    const route: TrackPoint[] = [];
+    const step = 0.05;
 
     for (let i = 0; i < points.length - 1; i++) { // Add intermediate points between each pair of points
-        let dist = distance(points[i], points[i + 1]) / 1000;
+        const dist = distance(points[i], points[i + 1]) / 1000;
         for (let d = 0; d < dist; d += step) {
-            let lat = points[i].lat + d / dist * (points[i + 1].lat - points[i].lat);
-            let lon = points[i].lon + d / dist * (points[i + 1].lon - points[i].lon);
+            const lat = points[i].lat + d / dist * (points[i + 1].lat - points[i].lat);
+            const lon = points[i].lon + d / dist * (points[i + 1].lon - points[i].lon);
             route.push(new TrackPoint({
                 attributes: {
                     lat: lat,

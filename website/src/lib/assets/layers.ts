@@ -505,6 +505,23 @@ export const overlays: { [key: string]: string | StyleSpecification; } = {
             source: 'ignSkiTouring',
         }],
     },
+    tet: {
+        version: 8,
+        sources: {
+            tet: {
+                type: 'raster',
+                tiles: ['https://geoserver.johannes-froelich.de/geoserver/gwc/service/wmts?service=WMTS&version=1.1.1&REQUEST=GetTile&TileMatrixSet=WebMercatorQuad&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&Layer=TET:tet&FORMAT=image/png&Style=generic'],
+                tileSize: 256,
+                maxzoom: 22,
+                attribution: 'transeurotrail.org'
+            },
+        },
+        layers: [{
+            id: 'tet',
+            type: 'raster',
+            source: 'tet',
+        }],
+    },
     waymarkedTrailsHiking: {
         version: 8,
         sources: {
@@ -678,6 +695,7 @@ export const basemapTree: LayerTreeType = {
 export const overlayTree: LayerTreeType = {
     overlays: {
         world: {
+            tet : true,
             waymarked_trails: {
                 waymarkedTrailsHiking: true,
                 waymarkedTrailsCycling: true,
@@ -761,6 +779,7 @@ export const defaultBasemap = 'mapboxOutdoors';
 export const defaultOverlays: LayerTreeType = {
     overlays: {
         world: {
+            tet : true,
             waymarked_trails: {
                 waymarkedTrailsHiking: false,
                 waymarkedTrailsCycling: false,
@@ -898,6 +917,7 @@ export const defaultBasemapTree: LayerTreeType = {
 export const defaultOverlayTree: LayerTreeType = {
     overlays: {
         world: {
+            tet : true,
             waymarked_trails: {
                 waymarkedTrailsHiking: true,
                 waymarkedTrailsCycling: true,

@@ -3,35 +3,36 @@ title: Opzioni di visualizzazione
 ---
 
 <script lang="ts">
-    import { ChartArea, GalleryVertical, Map, Layers2, Coins, Milestone, Box } from 'lucide-svelte';
+    import { ChartArea, ListTree, Map, Layers2, Coins, Milestone, Box } from 'lucide-svelte';
     import DocsNote from '$lib/components/docs/DocsNote.svelte';
 </script>
 
 # { title }
 
-This menu provides options to rearrange the interface and the map view.
+Questo menu fornisce opzioni per riorganizzare l'interfaccia e la visualizzazione delle mappe.
 
-### <ChartArea size="16" class="inline-block" style="margin-bottom: 2px" /> Elevation profile
+### <ChartArea size="16" class="inline-block" style="margin-bottom: 2px" /> Profilo altimetrico
 
 Nascondi il profilo di elevazione per fare spazio alla mappa, o mostralo per ispezionare la selezione corrente.
 
-### <GalleryVertical size="16" class="inline-block" style="margin-bottom: 2px" /> Elenco file verticali
+### <ListTree size="16" class="inline-block" style="margin-bottom: 2px" /> Albero file
 
-Passa tra una disposizione verticale e una orizzontale per l'elenco dei file.
-The [vertical file list](../files-and-stats) is useful when you have many files open, or files with multiple [tracks, segments, or points of interest](../gpx).
+Attiva/disattiva la vista ad albero per la [lista dei file](../files-and-stats).
+Questo layout è ideale per gestire un gran numero di file aperti, organizzandoli in una lista verticale sul lato destro della mappa.
+Inoltre, la vista ad albero dei file consente di ispezionare [tracce, segmenti e punti di interesse](../gpx) all'interno dei file attraverso sezioni espandibili.
 
-### <Map size="16" class="inline-block" style="margin-bottom: 2px" /> Switch to previous basemap
+### <Map size="16" class="inline-block" style="margin-bottom: 2px" /> Passa alla mappa di base precedente
 
-Change the basemap to the one previously selected through the [map layer control](../map-controls).
+Cambia il la mappa di base con quella precedentemente selezionata attraverso il [controllo del livello mappa](../map-controls).
 
 ### <Layers2 size="16" class="inline-block" style="margin-bottom: 2px" /> Attiva/disattiva sovrapposizioni
 
-Toggle the visibility of the map overlays selected through the [map layer control](../map-controls).
+Attiva/disattiva la visibilità dei livelli della mappa selezionati attraverso il [controllo del livello mappa](../map-controls).
 
-### <Coins size="16" class="inline-block" style="margin-bottom: 2px" /> Distance markers
+### <Coins size="16" class="inline-block" style="margin-bottom: 2px" /> Marcatori di distanza
 
 Attiva/disattiva la visibilità degli indicatori di distanza sulla mappa.
-They are displayed for the current selection, like the [elevation profile](../files-and-stats).
+Sono visualizzati per la selezione corrente, come il [profilo di elevazione](../files-and-stats).
 
 ### <Milestone size="16" class="inline-block" style="margin-bottom: 2px" /> Frecce di direzione
 

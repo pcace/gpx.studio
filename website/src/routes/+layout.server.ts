@@ -18,11 +18,13 @@ export async function load({ params }) {
     for (let guide of Object.keys(guides)) {
         guideTitles[guide] = (await getModule(language, guide)).metadata.title;
         for (let subguide of guides[guide]) {
-            guideTitles[`${guide}/${subguide}`] = (await getModule(language, `${guide}/${subguide}`)).metadata.title;
+            guideTitles[`${guide}/${subguide}`] = (
+                await getModule(language, `${guide}/${subguide}`)
+            ).metadata.title;
         }
     }
 
     return {
-        guideTitles
+        guideTitles,
     };
 }

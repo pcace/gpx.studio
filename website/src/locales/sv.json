@@ -33,7 +33,7 @@
         "select_all": "Markera allt",
         "view": "Visa",
         "elevation_profile": "Höjdprofil",
-        "vertical_file_view": "Vertikal fillista",
+        "tree_file_view": "File tree",
         "switch_basemap": "Växla till föregående baskarta",
         "toggle_overlays": "Växla överlagring",
         "toggle_3d": "Växla 3D",
@@ -79,7 +79,8 @@
         "hide": "Dölj",
         "unhide": "Visa",
         "center": "Center",
-        "open_in": "Öppna i"
+        "open_in": "Öppna i",
+        "copy_coordinates": "Copy coordinates"
     },
     "toolbar": {
         "routing": {
@@ -378,14 +379,6 @@
             "tram-stop": "Spårvagnshållplats",
             "bus-stop": "Busshållplats",
             "ferry": "Ferry"
-        },
-        "color": {
-            "blue": "Blå",
-            "bluered": "Blue Red",
-            "gray": "Grå",
-            "hot": "Hett",
-            "purple": "Lila",
-            "orange": "Orange"
         }
     },
     "chart": {

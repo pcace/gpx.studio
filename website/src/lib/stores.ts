@@ -11,7 +11,7 @@ import {
     applyToOrderedSelectedItemsFromFile,
     selectFile,
     selectItem,
-    selection
+    selection,
 } from '$lib/components/file-list/Selection';
 import {
     ListFileItem,
@@ -19,10 +19,12 @@ import {
     ListTrackItem,
     ListTrackSegmentItem,
     ListWaypointItem,
-    ListWaypointsItem
+    ListWaypointsItem,
 } from '$lib/components/file-list/FileList';
 import type { RoutingControls } from '$lib/components/toolbar/tools/routing/RoutingControls';
 import { SplitType } from '$lib/components/toolbar/tools/scissors/Scissors.svelte';
+import FileSaver from 'file-saver';
+import JSZip from 'jszip';
 
 const { fileOrder } = settings;
 
@@ -41,7 +43,10 @@ export function updateGPXData() {
         if (stats) {
             let first = true;
             items.forEach((item) => {
-                if (!(item instanceof ListWaypointItem || item instanceof ListWaypointsItem) || first) {
+                if (
+                    !(item instanceof ListWaypointItem || item instanceof ListWaypointsItem) ||
+                    first
+                ) {
                     statistics.mergeWith(stats.getStatisticsFor(item));
                     first = false;
                 }
@@ -108,7 +113,8 @@ derived([targetMapBounds, map], (x) => x).subscribe(([bounds, $map]) => {
 
     let currentZoom = $map.getZoom();
     let currentBounds = $map.getBounds();
-    if (bounds.total !== get(fileObservers).size &&
+    if (
+        bounds.total !== get(fileObservers).size &&
         currentBounds &&
         currentZoom > 2 // Extend current bounds only if the map is zoomed in
     ) {
@@ -135,7 +141,10 @@ export function initTargetMapBounds(ids: string[]) {
     });
 }
 
-export function updateTargetMapBounds(id: string, bounds: { southWest: Coordinates; northEast: Coordinates }) {
+export function updateTargetMapBounds(
+    id: string,
+    bounds: { southWest: Coordinates; northEast: Coordinates }
+) {
     if (get(targetMapBounds).ids.indexOf(id) === -1) {
         return;
     }
@@ -157,8 +166,7 @@ export function updateTargetMapBounds(id: string, bounds: { southWest: Coordinat
     });
 }
 
-export function centerMapOnSelection(
-) {
+export function centerMapOnSelection() {
     let selected = get(selection).getSelected();
     let bounds = new mapboxgl.LngLatBounds();
 
@@ -185,7 +193,7 @@ export function centerMapOnSelection(
     get(map)?.fitBounds(bounds, {
         padding: 80,
         easing: () => 1,
-        maxZoom: 15
+        maxZoom: 15,
     });
 }
 
@@ -201,7 +209,7 @@ export enum Tool {
     EXTRACT,
     ELEVATION,
     REDUCE,
-    CLEAN
+    CLEAN,
 }
 export const currentTool = writable<Tool | null>(null);
 export const splitAs = writable(SplitType.FILES);
@@ -407,35 +415,49 @@ export function updateSelectionFromKey(down: boolean, shift: boolean) {
 }
 
 async function exportFiles(fileIds: string[], exclude: string[]) {
-    for (let fileId of fileIds) {
-        let file = getFile(fileId);
-        if (file) {
-            exportFile(file, exclude);
-            await new Promise((resolve) => setTimeout(resolve, 200));
+    if (fileIds.length > 1) {
+        await exportFilesAsZip(fileIds, exclude);
+    } else {
+        const firstFileId = fileIds.at(0);
+        if (firstFileId != null) {
+            const file = getFile(firstFileId);
+            if (file) {
+                exportFile(file, exclude);
+            }
         }
     }
 }
 
-export function exportSelectedFiles(exclude: string[]) {
-    let fileIds: string[] = [];
+export async function exportSelectedFiles(exclude: string[]) {
+    const fileIds: string[] = [];
     applyToOrderedSelectedItemsFromFile(async (fileId, level, items) => {
         fileIds.push(fileId);
     });
-    exportFiles(fileIds, exclude);
+    await exportFiles(fileIds, exclude);
 }
 
-export function exportAllFiles(exclude: string[]) {
-    exportFiles(get(fileOrder), exclude);
+export async function exportAllFiles(exclude: string[]) {
+    await exportFiles(get(fileOrder), exclude);
 }
 
-export function exportFile(file: GPXFile, exclude: string[]) {
-    let blob = new Blob([buildGPX(file, exclude)], { type: 'application/gpx+xml' });
-    let url = URL.createObjectURL(blob);
-    let a = document.createElement('a');
-    a.href = url;
-    a.download = file.metadata.name + '.gpx';
-    a.click();
-    URL.revokeObjectURL(url);
+function exportFile(file: GPXFile, exclude: string[]) {
+    const blob = new Blob([buildGPX(file, exclude)], { type: 'application/gpx+xml' });
+    FileSaver.saveAs(blob, `${file.metadata.name}.gpx`);
+}
+
+async function exportFilesAsZip(fileIds: string[], exclude: string[]) {
+    const zip = new JSZip();
+    for (const fileId of fileIds) {
+        const file = getFile(fileId);
+        if (file) {
+            const gpx = buildGPX(file, exclude);
+            zip.file(file.metadata.name + '.gpx', gpx);
+        }
+    }
+    if (Object.keys(zip.files).length > 0) {
+        const blob = await zip.generateAsync({ type: 'blob' });
+        FileSaver.saveAs(blob, 'gpx-files.zip');
+    }
 }
 
 export const allHidden = writable(false);
@@ -452,7 +474,10 @@ export function updateAllHidden() {
 
                 if (item instanceof ListFileItem) {
                     hidden = hidden && file._data.hidden === true;
-                } else if (item instanceof ListTrackItem && item.getTrackIndex() < file.trk.length) {
+                } else if (
+                    item instanceof ListTrackItem &&
+                    item.getTrackIndex() < file.trk.length
+                ) {
                     hidden = hidden && file.trk[item.getTrackIndex()]._data.hidden === true;
                 } else if (
                     item instanceof ListTrackSegmentItem &&
@@ -461,10 +486,14 @@ export function updateAllHidden() {
                 ) {
                     hidden =
                         hidden &&
-                        file.trk[item.getTrackIndex()].trkseg[item.getSegmentIndex()]._data.hidden === true;
+                        file.trk[item.getTrackIndex()].trkseg[item.getSegmentIndex()]._data
+                            .hidden === true;
                 } else if (item instanceof ListWaypointsItem) {
                     hidden = hidden && file._data.hiddenWpt === true;
-                } else if (item instanceof ListWaypointItem && item.getWaypointIndex() < file.wpt.length) {
+                } else if (
+                    item instanceof ListWaypointItem &&
+                    item.getWaypointIndex() < file.wpt.length
+                ) {
                     hidden = hidden && file.wpt[item.getWaypointIndex()]._data.hidden === true;
                 }
             }
@@ -480,6 +509,6 @@ export const editStyle = writable(false);
 export enum ExportState {
     NONE,
     SELECTION,
-    ALL
+    ALL,
 }
 export const exportState = writable<ExportState>(ExportState.NONE);

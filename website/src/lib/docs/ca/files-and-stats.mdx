@@ -11,7 +11,7 @@ title: Fitxers i estadístiques
 
 ## Llista de fitxers
 
-Un cop heu [obert] els fitxers (./menu/file), es mostraran com a pestanyes a la llista de fitxers de sota el mapa.
+Un cop heu [obert](./menu/file) els fitxers, es mostraran com a pestanyes a la llista de fitxers de sota el mapa.
 Podeu reordenar-los arrossegant i soltant les pestanyes.
 I quan hi ha molts fitxers oberts, podeu desplaçar-vos en la llista de pestanyes i navegar entre ells.
 
@@ -23,60 +23,60 @@ Quan utilitzeu un ratolí, haureu de mantenir premut <kbd>Maj</kbd> per desplaç
 
 ### Selecció de fitxers
 
-Clicant en una pestanya, podeu canviar entre diversos fitxers per veures les seves estadísticques i aplicar-los [edit actions](./menu/edit) i tools](./toolbar).
+Clicant en una pestanya, podeu canviar entre diversos fitxers per veures les seves estadísticques i aplicar-los [edit actions](./menu/edit) i [tools](./toolbar).
 Mantenint la tecla <kbd>Ctrl/Cmd</kbd>, podeu afegir fitxers a la selecció o eliminar-los, i mantenint la tecla <kbd>Maj</kbd>, podeu seleccionar un conjunt de fitxers.
-Most of the [edit actions](./menu/edit) and [tools](./toolbar) can be applied to multiple files at once.
+La majoria de les [accions d'edició](./menu/edit) i [eines](./toolbar) es poden aplicar a diversos arxius alhora.
 
 <DocsNote>
 
-You can also navigate through the files using the arrow keys on your keyboard, and use <kbd>Shift</kbd> to add files to the selection.
+També pots navegar a través dels arxius utilitzant les fletxes del teu teclat, i prémer <kbd>Shift</kbd> per afegir arxius a la selecció.
 
 </DocsNote>
 
-### Edit actions
+### Accions d'edició
 
-By right-clicking on a file tab, you can access the same actions as in the [edit menu](./menu/edit).
+Clicant el botó dret en la pestanya d'un arxiu, pots accedir a les mateixes accions que en el [menú d'edició](./menu/edit).
 
-### Disposició vertical
+### Disposició de l'arbre
 
-As mentioned in the [view options section](./menu/view), you can switch between a horizontal and a vertical layout for the file list.
-The vertical file list is useful when you have many files open, or files with multiple [tracks, segments, or points of interest](./gpx).
-Indeed, this layout allows you to inspect the content of the files through collapsible sections.
+Tal i com es menciona en la [secció d'opcions de vista](./menu/view), pots canviar a un esquema d'arbre per a la llista d'arxius.
+Aquesta disposició és ideal per tal d'administrar un gran nombre d'arxius oberts, ja que els organitza en una llista vertical en la part dreta del mapa.
+A més, la vista d'arbre d'arxius permet inspeccionar [tracs, segments i punts d'interès](./gpx) continguts dins dels arxius a través de seccions plegables.
 
-You can also apply [edit actions](./menu/edit) and [tools](./toolbar) to internal file items.
-Furthermore, you can drag and drop the inner items to reorder them, or move them in the hierarchy or even to another file.
+També pots aplicar [accions d'edició](./menu/edit) i [eines](./toolbar) a elements interns de l'arxiu.
+A més, pots arrossegar i deixar anar els elements interns per reordenar-los, o moure'ls en la jerarquia o fins i tot a un altre arxiu.
 
 <DocsNote>
 
-The size of the file list can be adjusted by dragging the separator between the map and the file list.
+La mida de la llista d'arxius es pot ajustar arrossegant el separador entre el mapa i la llista d'arxius.
 
 </DocsNote>
 
-## Elevation profile and statistics
+## Perfil d'elevació i estadístiques
 
-At the bottom of the interface, you can find the elevation profile and statistics for the current selection.
+En la part inferior de la interfície, pots trobar el perfil d'elevació i estadístiques de la selecció actual.
 
 <DocsNote>
 
-The size of the elevation profile can be adjusted by dragging the separator between the map and the elevation profile.
+La mida del perfil d'elevació es pot ajustar arrossegant el separador entre el mapa i el perfil d'elevació.
 
 </DocsNote>
 
-### Interactive statistics
+### Estadístiques interactives
 
-When hovering over the elevation profile, a tooltip will show statistics at the cursor position.
+Quan es passa sobre el perfil d'elevació, un globus emergent mostrarà estadístiques en la posició del cursor.
 
-To get the statistics for a specific section of the elevation profile, you can drag a selection rectangle on the profile.
-Click on the profile to reset the selection.
+Per obtenir estadístiques d'una secció específica del perfil d'elevació, pots crear un rectangle de selecció en el perfil.
+Clica en el perfil per restablir la selecció.
 
-You can also use the mouse wheel to zoom in and out on the elevation profile, and move left and right by dragging the profile while holding the <kbd>Shift</kbd> key.
+També pots utilitzar la rodeta del ratolí per apropar o allunyar el perfil d'elevació i moure't cap a l'esquerra i dreta arrossegant el perfil, tot prement la tecla <kbd>Shift</kbd>.
 
 ### Dades addicionals
 
-Using the <kbd><ChartNoAxesColumn size="16" class="inline-block" style="margin-bottom: 2px"/></kbd> button at the bottom-right of the elevation profile, you can optionally color the elevation profile by:
+Utilitzant el botó <kbd><ChartNoAxesColumn size="16" class="inline-block" style="margin-bottom: 2px"/></kbd> de la part inferior dreta del perfil d'elevació, pots pintar el perfil d'elevació en funció de:
 
-- **slope** information computed from the elevation data, or
-- **surface** or **category** data coming from <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>'s <a href="https://wiki.openstreetmap.org/wiki/Key:surface" target="_blank">surface</a> and <a href="https://wiki.openstreetmap.org/wiki/Key:highway" target="_blank">highway</a> tags.
-  This is only available for files created with **gpx.studio**.
+- informació de **pendent** calculada a partir de les dades d'elevació, o
+- dades de **superfície** o **categoria** provinents de <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a>'s <a href="https://wiki.openstreetmap.org/wiki/Key:surface" target="_blank">superfície</a> i <a href="https://wiki.openstreetmap.org/wiki/Key:highway" target="_blank">autopista</a> etiquetes.
+  Només disponible per arxius creats amb **gpx.studio**.
 
-If your selection includes it, you can also visualize: **speed**, **heart rate**, **cadence**, **temperature** and **power** data on the elevation profile.
+Si la teva selecció en té, també pots visualitzar: dades de **velocitat**, **ritme cardíac**, **cadència**, **temperatura** i **potència** en el perfil d'elevació.

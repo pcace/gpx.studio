@@ -39,7 +39,7 @@ fetchProfiles();
 
 export const routingProfileSelectItem = writable({
     value: '',
-    label: ''
+    label: '',
 });
 
 derived([routingProfile, locale, isLoading], ([profile, l, i]) => [profile, l, i]).subscribe(([profile, l, i]) => {
@@ -50,7 +50,7 @@ derived([routingProfile, locale, isLoading], ([profile, l, i]) => [profile, l, i
             return item;
         });
     }
-});
+);
 routingProfileSelectItem.subscribe((item) => {
     if (item.value !== '' && item.value !== get(routingProfile)) {
         routingProfile.set(item.value);
@@ -80,25 +80,29 @@ async function getRoute(points: Coordinates[], brouterProfile: string, privateRo
     const coordinates = geojson.features[0].geometry.coordinates;
     const messages = geojson.features[0].properties.messages;
 
-    const lngIdx = messages[0].indexOf("Longitude");
-    const latIdx = messages[0].indexOf("Latitude");
-    const tagIdx = messages[0].indexOf("WayTags");
+    const lngIdx = messages[0].indexOf('Longitude');
+    const latIdx = messages[0].indexOf('Latitude');
+    const tagIdx = messages[0].indexOf('WayTags');
     let messageIdx = 1;
     let tags = messageIdx < messages.length ? getTags(messages[messageIdx][tagIdx]) : {};
 
     for (let i = 0; i < coordinates.length; i++) {
-        const coord = coordinates[i];
-        route.push(new TrackPoint({
-            attributes: {
-                lat: coord[1],
-                lon: coord[0]
-            },
-            ele: coord[2] ?? (i > 0 ? route[i - 1].ele : 0)
-        }));
+        let coord = coordinates[i];
+        route.push(
+            new TrackPoint({
+                attributes: {
+                    lat: coord[1],
+                    lon: coord[0],
+                },
+                ele: coord[2] ?? (i > 0 ? route[i - 1].ele : 0),
+            })
+        );
 
-        if (messageIdx < messages.length &&
+        if (
+            messageIdx < messages.length &&
             coordinates[i][0] == Number(messages[messageIdx][lngIdx]) / 1000000 &&
-            coordinates[i][1] == Number(messages[messageIdx][latIdx]) / 1000000) {
+            coordinates[i][1] == Number(messages[messageIdx][latIdx]) / 1000000
+        ) {
             messageIdx++;
 
             if (messageIdx == messages.length) tags = {};
@@ -112,10 +116,10 @@ async function getRoute(points: Coordinates[], brouterProfile: string, privateRo
 }
 
 function getTags(message: string): { [key: string]: string } {
-    const fields = message.split(" ");
-    const tags: { [key: string]: string } = {};
+    const fields = message.split(' ');
+    let tags: { [key: string]: string } = {};
     for (let i = 0; i < fields.length; i++) {
-        let [key, value] = fields[i].split("=");
+        let [key, value] = fields[i].split('=');
         key = key.replace(/:/g, '_');
         tags[key] = value;
     }
@@ -126,26 +130,31 @@ function getIntermediatePoints(points: Coordinates[]): Promise<TrackPoint[]> {
     const route: TrackPoint[] = [];
     const step = 0.05;
 
-    for (let i = 0; i < points.length - 1; i++) { // Add intermediate points between each pair of points
-        const dist = distance(points[i], points[i + 1]) / 1000;
+    for (let i = 0; i < points.length - 1; i++) {
+        // Add intermediate points between each pair of points
+        let dist = distance(points[i], points[i + 1]) / 1000;
         for (let d = 0; d < dist; d += step) {
-            const lat = points[i].lat + d / dist * (points[i + 1].lat - points[i].lat);
-            const lon = points[i].lon + d / dist * (points[i + 1].lon - points[i].lon);
-            route.push(new TrackPoint({
-                attributes: {
-                    lat: lat,
-                    lon: lon
-                }
-            }));
+            let lat = points[i].lat + (d / dist) * (points[i + 1].lat - points[i].lat);
+            let lon = points[i].lon + (d / dist) * (points[i + 1].lon - points[i].lon);
+            route.push(
+                new TrackPoint({
+                    attributes: {
+                        lat: lat,
+                        lon: lon,
+                    },
+                })
+            );
         }
     }
 
-    route.push(new TrackPoint({
-        attributes: {
-            lat: points[points.length - 1].lat,
-            lon: points[points.length - 1].lon
-        }
-    }));
+    route.push(
+        new TrackPoint({
+            attributes: {
+                lat: points[points.length - 1].lat,
+                lon: points[points.length - 1].lon,
+            },
+        })
+    );
 
     return getElevation(route).then((elevations) => {
         route.forEach((point, i) => {

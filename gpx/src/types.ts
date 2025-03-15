@@ -67,9 +67,9 @@ export type TrackExtensions = {
 };
 
 export type LineStyleExtension = {
-    color?: string;
-    opacity?: number;
-    weight?: number;
+    'gpx_style:color'?: string;
+    'gpx_style:opacity'?: number;
+    'gpx_style:width'?: number;
 };
 
 export type TrackSegmentType = {
@@ -93,11 +93,11 @@ export type TrackPointExtension = {
     'gpxtpx:hr'?: number;
     'gpxtpx:cad'?: number;
     'gpxtpx:Extensions'?: Record<string, string>;
-}
+};
 
 export type PowerExtension = {
     'gpxpx:PowerInWatts'?: number;
-}
+};
 
 export type Author = {
     name?: string;
@@ -114,12 +114,12 @@ export type RouteType = {
     type?: string;
     extensions?: TrackExtensions;
     rtept: WaypointType[];
-}
+};
 
 export type RoutePointExtension = {
     'gpxx:rpt'?: GPXXRoutePoint[];
-}
+};
 
 export type GPXXRoutePoint = {
     attributes: Coordinates;
-}
+};

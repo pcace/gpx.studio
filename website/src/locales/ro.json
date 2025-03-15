@@ -33,7 +33,7 @@
         "select_all": "Selectează tot",
         "view": "Vizualizare",
         "elevation_profile": "Profil de altitudine",
-        "vertical_file_view": "Listă de fișiere verticale",
+        "tree_file_view": "File tree",
         "switch_basemap": "Switch to previous basemap",
         "toggle_overlays": "Comută suprapunerile",
         "toggle_3d": "Comută 3D",
@@ -79,7 +79,8 @@
         "hide": "Hide",
         "unhide": "Unhide",
         "center": "Center",
-        "open_in": "Open in"
+        "open_in": "Open in",
+        "copy_coordinates": "Copy coordinates"
     },
     "toolbar": {
         "routing": {
@@ -378,14 +379,6 @@
             "tram-stop": "Tram Stop",
             "bus-stop": "Bus Stop",
             "ferry": "Ferry"
-        },
-        "color": {
-            "blue": "Blue",
-            "bluered": "Blue Red",
-            "gray": "Gray",
-            "hot": "Hot",
-            "purple": "Purple",
-            "orange": "Orange"
         }
     },
     "chart": {

@@ -10,7 +10,7 @@
     "menu": {
         "new": "Nou",
         "new_file": "Nou fitxer",
-        "new_track": "Nou itinerari",
+        "new_track": "Nou trac",
         "new_segment": "Nou segment",
         "open": "Obrir...",
         "duplicate": "Duplica el track",
@@ -33,7 +33,7 @@
         "select_all": "Seleccionar-ho tot",
         "view": "Vista",
         "elevation_profile": "Perfil d’elevacions",
-        "vertical_file_view": "Llista de fitxers vertical",
+        "tree_file_view": "Arbre d'arxius",
         "switch_basemap": "Canviar al mapa base anterior",
         "toggle_overlays": "Intercanvia capes",
         "toggle_3d": "Canvia a 3D",
@@ -51,7 +51,7 @@
         "system": "Sistema",
         "light": "Clar",
         "dark": "Fosc",
-        "street_view_source": "Font de \"Street view\"",
+        "street_view_source": "Font de Street view",
         "mapillary": "Mapillary",
         "google": "Google",
         "toggle_street_view": "Street view",
@@ -79,7 +79,8 @@
         "hide": "Amagar",
         "unhide": "Veure",
         "center": "Centrar",
-        "open_in": "Obrir amb"
+        "open_in": "Obrir amb",
+        "copy_coordinates": "Copiar coordenades"
     },
     "toolbar": {
         "routing": {
@@ -120,7 +121,7 @@
                 "asphalt": "Asfalt",
                 "concrete": "Formigó",
                 "cobblestone": "Llambordes",
-                "paving_stones": "Camí de pedres",
+                "paving_stones": "Llambordes",
                 "sett": "Establir",
                 "metal": "Metall",
                 "wood": "Fusta",
@@ -156,13 +157,13 @@
                 "living_street": "Carrer residencial",
                 "service": "Via de servei",
                 "track": "Pista",
-                "footway": "Camí de vianants",
+                "footway": "Camí per a vianants",
                 "path": "Camí",
                 "pedestrian": "Vianant",
                 "cycleway": "Carril bici",
                 "steps": "Graons",
                 "road": "Carretera",
-                "bridleway": "Camí de cavalls",
+                "bridleway": "Camí per a cavalls",
                 "platform": "Plataforma",
                 "raceway": "Circuit de competició",
                 "rest_area": "Àrea de descans",
@@ -195,7 +196,7 @@
         "scissors": {
             "tooltip": "Retallar o dividir",
             "crop": "Retallar",
-            "split_as": "Dividir la sala en",
+            "split_as": "Dividir la traça en",
             "help_invalid_selection": "Seleccioneu una traça per retallar o dividir.",
             "help": "Utilitzeu el control lliscant per retallar la traça, o talleu-la clicant en un dels marcadors de tall o a la mateixa traça."
         },
@@ -378,14 +379,6 @@
             "tram-stop": "Parada de tramvia",
             "bus-stop": "Parada d'autobús",
             "ferry": "Ferri"
-        },
-        "color": {
-            "blue": "Blau",
-            "bluered": "Blau vermell",
-            "gray": "Gris",
-            "hot": "Popular",
-            "purple": "Lila",
-            "orange": "Taronja"
         }
     },
     "chart": {

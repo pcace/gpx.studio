@@ -33,7 +33,7 @@
         "select_all": "Select all",
         "view": "View",
         "elevation_profile": "Elevation profile",
-        "vertical_file_view": "Vertical file list",
+        "tree_file_view": "File tree",
         "switch_basemap": "Switch to previous basemap",
         "toggle_overlays": "Toggle overlays",
         "toggle_3d": "Toggle 3D",
@@ -79,7 +79,8 @@
         "hide": "Hide",
         "unhide": "Unhide",
         "center": "Center",
-        "open_in": "Open in"
+        "open_in": "Open in",
+        "copy_coordinates": "Copy coordinates"
     },
     "toolbar": {
         "routing": {
@@ -378,14 +379,6 @@
             "tram-stop": "Tram Stop",
             "bus-stop": "Bus Stop",
             "ferry": "Ferry"
-        },
-        "color": {
-            "blue": "Μπλέ",
-            "bluered": "Blue Red",
-            "gray": "Γκρίζο",
-            "hot": "Ζεστό",
-            "purple": "Μωβ",
-            "orange": "Orange"
         }
     },
     "chart": {

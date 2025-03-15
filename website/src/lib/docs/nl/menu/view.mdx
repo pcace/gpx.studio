@@ -3,7 +3,7 @@ title: Bekijk opties
 ---
 
 <script lang="ts">
-    import { ChartArea, GalleryVertical, Map, Layers2, Coins, Milestone, Box } from 'lucide-svelte';
+    import { ChartArea, ListTree, Map, Layers2, Coins, Milestone, Box } from 'lucide-svelte';
     import DocsNote from '$lib/components/docs/DocsNote.svelte';
 </script>
 
@@ -15,16 +15,17 @@ Dit menu biedt opties om de interface en de kaartweergave te herschikken.
 
 Verberg het hoogteprofiel om ruimte te maken voor de kaart, of toon het om de huidige selectie te inspecteren.
 
-### <GalleryVertical size="16" class="inline-block" style="margin-bottom: 2px" /> Verticale bestandslijst
+### <ListTree size="16" class="inline-block" style="margin-bottom: 2px" /> Bestandsboom
 
-Schakel tussen een verticale en een horizontale layout voor de bestandslijst.
-De verticale bestandslijst is handig wanneer je veel bestanden hebt geopend, of bestanden met meerdere [tracks, segmenten of POI's](../gpx).
+Schakel naar de boomstructuur voor de [bestandslijst](../files-and-stats).
+Deze indeling is ideaal voor het beheren van een groot aantal open bestanden, omdat deze geordend worden in een verticale lijst op de rechterkant van de kaart.
+Daarnaast kun je met de boomweergave de [routes, segmenten, en interessante punten](../gpx) in de bestanden bekijken door middel van inklapbare secties.
 
-### <Map size="16" class="inline-block" style="margin-bottom: 2px" /> Wissel naar vorige basemap
+### <Map size="16" class="inline-block" style="margin-bottom: 2px" /> Wissel naar vorige basiskaart
 
 Verander de basiskaart naar de kaart die eerder is geselecteerd via [kaartlaag controle](../map-controls).
 
-### <Layers2 size="16" class="inline-block" style="margin-bottom: 2px" /> Schakel overlays
+### <Layers2 size="16" class="inline-block" style="margin-bottom: 2px" /> Schakel lagen
 
 Verander de basiskaart naar de kaart die eerder is geselecteerd via [kaartlaag controle](../map-controls).
 

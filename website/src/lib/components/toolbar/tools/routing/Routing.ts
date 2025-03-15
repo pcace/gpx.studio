@@ -50,7 +50,7 @@ derived([routingProfile, locale, isLoading], ([profile, l, i]) => [profile, l, i
             return item;
         });
     }
-);
+});
 routingProfileSelectItem.subscribe((item) => {
     if (item.value !== '' && item.value !== get(routingProfile)) {
         routingProfile.set(item.value);

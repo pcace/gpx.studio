@@ -668,9 +668,9 @@ export const overlays: { [key: string]: string | StyleSpecification } = {
         sources: {
             tet: {
                 type: 'raster',
-                tiles: ['https://geoserver.johannes-froelich.de/geoserver/gwc/service/wmts?service=WMTS&version=1.1.1&REQUEST=GetTile&TileMatrixSet=WebMercatorQuad&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&Layer=TET:tet&FORMAT=image/png&Style=generic'],
-                tileSize: 256,
-                maxzoom: 22,
+                tiles: ['https://geoserver.johannes-froelich.de/geoserver/ows?service=WMS&version=1.1.1&request=getmap&height=512&width=512&layers=tet&format=image/png&transparent=true&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}'],
+                tileSize: 512,
+                maxzoom: 23,
                 attribution: 'transeurotrail.org'
             },
         },
@@ -955,7 +955,7 @@ export const defaultBasemap = 'mapboxOutdoors';
 export const defaultOverlays: LayerTreeType = {
     overlays: {
         world: {
-            tet : true,
+            tet : false,
             waymarked_trails: {
                 waymarkedTrailsHiking: false,
                 waymarkedTrailsCycling: false,
